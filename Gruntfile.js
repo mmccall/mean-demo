@@ -401,6 +401,44 @@ module.exports = function (grunt) {
       }
     },
 
+    // Coverage options
+
+    coveralls: {
+            options: {
+                // LCOV coverage file relevant to every target
+                src: 'coverage/lcov.info',
+
+                // When true, grunt-coveralls will only print a warning rather than
+                // an error, to prevent CI builds from failing unnecessarily (e.g. if
+                // coveralls.io is down). Optional, defaults to false.
+                force: false
+            },
+            //your_target: {
+            // Target-specific LCOV coverage file
+            //src: 'coverage-results/extra-results-*.info'
+            //},
+        },
+        coverage: {
+            options: {
+                thresholds: {
+                    'statements': 50,
+                    'branches': 25,
+                    'lines': 50,
+                    'functions': 50
+                },
+                dir: 'coverage/',
+                root: '.'
+            }
+        },
+
+        shell: {
+            run_istanbul: {
+                command: "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --recursive ./server/**/*.spec.js"
+            }
+        },
+
+
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -640,6 +678,11 @@ module.exports = function (grunt) {
     ]);
   });
 
+
+  grunt.loadNpmTasks('grunt-istanbul-coverage');
+  grunt.loadNpmTasks('grunt-coveralls');
+
+  grunt.registerTask('coverage', ['shell:run_istanbul']);
   grunt.registerTask('build', [
     'clean:dist',
     'injector:sass', 
@@ -662,6 +705,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
-    'build'
+    'build',
+    'coverage'
   ]);
 };
