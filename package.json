@@ -54,7 +54,7 @@
     "grunt-build-control": "DaftMonk/grunt-build-control",
     "grunt-mocha-test": "~0.10.2",
     "grunt-contrib-sass": "^0.7.3",
-    "coveralls": "~2.10.0",
+    "coveralls": "*",
     "grunt-coveralls": "*",
     "grunt-istanbul-coverage": "*",
     "mocha-lcov-reporter": "0.0.1",
