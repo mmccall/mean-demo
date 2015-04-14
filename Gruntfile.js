@@ -682,7 +682,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-istanbul-coverage');
   grunt.loadNpmTasks('grunt-coveralls');
 
-  grunt.registerTask('coverage', ['shell:run_istanbul']);
+  grunt.registerTask('coverage', ['coveralls']);
   grunt.registerTask('build', [
     'clean:dist',
     'injector:sass', 
