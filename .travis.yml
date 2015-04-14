@@ -3,7 +3,8 @@ node_js:
   - '0.10'
   - '0.11'
 before_script:
-  - npm install -g bower grunt-cli mocha istanbul coveralls
+  - npm install -g bower grunt-cli mocha istanbul
+  - npm install coveralls
   - gem install sass
   - bower install
 services: mongodb
