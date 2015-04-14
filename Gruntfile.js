@@ -17,7 +17,9 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+    coveralls: 'grunt-coveralls',
+    coverage: 'grunt-istanbul-coverage'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -430,15 +432,6 @@ module.exports = function (grunt) {
                 root: '.'
             }
         },
-
-        shell: {
-            run_istanbul: {
-                command: "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --recursive ./server/**/*.spec.js"
-            }
-        },
-
-
-
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -678,10 +671,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-
-  grunt.loadNpmTasks('grunt-istanbul-coverage');
-  grunt.loadNpmTasks('grunt-coveralls');
-
   grunt.registerTask('build', [
     'clean:dist',
     'injector:sass', 
@@ -701,11 +690,10 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
-  grunt.registerTask('coverage', ['shell:run_istanbul, coveralls'])
-
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
-    'build'
+    'build',
+    'coveralls'
   ]);
 };
