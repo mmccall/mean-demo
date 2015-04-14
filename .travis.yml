@@ -9,4 +9,4 @@ before_script:
 services: mongodb
 script:
     - grunt
-    - istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --recursive ./server/**/*.spec.js
+    - istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --recursive ./server/**/*.spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
