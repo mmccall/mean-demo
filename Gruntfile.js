@@ -701,6 +701,8 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
+  grunt.registerTask('coverage', ['shell:run_istanbul, coveralls'])
+
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
