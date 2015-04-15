@@ -17,7 +17,9 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
-    buildcontrol: 'grunt-build-control'
+    buildcontrol: 'grunt-build-control',
+    coveralls: 'grunt-coveralls',
+    coverage: 'grunt-istanbul-coverage'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -401,6 +403,35 @@ module.exports = function (grunt) {
       }
     },
 
+    // Coverage options
+
+    coveralls: {
+            options: {
+                // LCOV coverage file relevant to every target
+                src: 'coverage/lcov.info',
+
+                // When true, grunt-coveralls will only print a warning rather than
+                // an error, to prevent CI builds from failing unnecessarily (e.g. if
+                // coveralls.io is down). Optional, defaults to false.
+                force: false
+            },
+            //your_target: {
+            // Target-specific LCOV coverage file
+            //src: 'coverage-results/extra-results-*.info'
+            //},
+        },
+        coverage: {
+            options: {
+                thresholds: {
+                    'statements': 50,
+                    'branches': 25,
+                    'lines': 50,
+                    'functions': 50
+                },
+                dir: 'coverage/',
+                root: '.'
+            }
+        },
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -662,6 +693,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
-    'build'
+    'build',
+    'coveralls'
   ]);
 };
