@@ -47,9 +47,9 @@ describe('GET /api/things', function() {
         if (err) return done(err);
         res.body.should.be.instanceof(Array);
         _.each(res.body, function(entry) {
-          entry.active.should.equal(true);
-
-
+          if (entry.name === 'A big thing') {
+            entry.active.should.equal(true);  
+          }
         });
         done();
       });
